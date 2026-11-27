@@ -27,6 +27,7 @@ function copyOpenGraphBanner() {
 }
 
 export default defineConfig({
+  base: "./",
   server: {
     headers: securityHeaders,
   },
