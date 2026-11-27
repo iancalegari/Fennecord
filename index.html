@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fennecord | INS Studio (+200 dB, Reverb, Graves, MP3 e WAV)</title>
+  <meta name="description"
+    content="Fennecord (INS Studio): editor de áudio online simples e gratuito com ganho até +200 dB, reverb, reforço de graves, equalizador, velocidade e download em MP3 ou WAV direto no navegador.">
+  <meta name="theme-color" content="#0A0A0C">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';">
+
+  <!-- Open Graph / Compartilhamento Social (1200x630) -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="Fennecord | INS Studio">
+  <meta property="og:title" content="Fennecord | INS Studio (+200 dB, Reverb e Graves)">
+  <meta property="og:description"
+    content="Estoure o ganho até +200 dB, adicione reverb, graves, velocidade e baixe seu áudio editado em MP3 ou WAV 100% no navegador.">
+  <meta property="og:url" content="https://audioestourado.vercel.app/">
+  <meta property="og:image" content="https://audioestourado.vercel.app/assets/og-banner.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Fennecord | INS Studio (+200 dB, Reverb e Graves)">
+  <meta name="twitter:description"
+    content="Adicione reverb, graves e ganho extremo até +200 dB com visualizador em tempo real e exportação em MP3 ou WAV.">
+  <meta name="twitter:image" content="https://audioestourado.vercel.app/assets/og-banner.png">
+
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+
+  <!-- Tipografia editorial/técnica e Ícones Material UI (MUI) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+  <!-- Cabeçalho principal -->
+  <header class="site-header">
+    <div class="container grid-12 header-inner">
+      <a href="#topo" class="brand col-span-6" aria-label="Fennecord INS Studio, página inicial">
+        <span class="brand-mark" aria-hidden="true">
+          <img src="./assets/logo-fennecord.svg" alt="" width="40" height="40">
+        </span>
+        <span class="brand-text">
+          <strong>Fennecord</strong>
+          <small>INS Studio // 200dB</small>
+        </span>
+      </a>
+
+      <div class="header-actions col-span-6">
+        <button type="button" id="btn-header-upload" class="btn btn-primary btn-sm">
+          <span class="material-icons" aria-hidden="true">upload_file</span>
+          <span>Carregar Áudio</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="topo">
+    <!-- Seção Hero (Grid 12 colunas) -->
+    <section class="hero-section">
+      <div class="hero-ambient" aria-hidden="true">
+        <canvas id="hero-ambient-canvas" width="680" height="320"></canvas>
+      </div>
+      <div class="container grid-12 hero-grid">
+        <div class="hero-copy col-span-8">
+          <h1 class="kinetic-title" aria-label="Estoure o ganho até +200 dB e edite áudios em segundos">
+            <span class="kinetic-line"><span class="kinetic-word delay-0">Estoure o ganho</span></span>
+            <span class="kinetic-line"><span class="kinetic-word delay-1">até</span> <span
+                class="kinetic-word accent-word delay-2">+200 dB</span> <span class="kinetic-word delay-3">em
+                segundos</span></span>
+          </h1>
+
+          <p class="hero-description">
+            Aplique <strong>áudio estourado</strong>, reforço de graves, reverb de sala, eco e controle de velocidade
+            direto no navegador. 100% privado, sem cadastro e com download instantâneo em MP3 ou WAV.
+          </p>
+
+          <div class="hero-metrics" aria-label="Especificações do motor de áudio">
+            <div class="metric-item">
+              <span class="metric-value"><span class="material-icons metric-icon" aria-hidden="true">graphic_eq</span>+200 dB</span>
+              <span class="metric-label">Ganho máximo</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-value"><span class="material-icons metric-icon" aria-hidden="true">bolt</span>WAV &amp; MP3</span>
+              <span class="metric-label">Exportação fiel</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-value"><span class="material-icons metric-icon" aria-hidden="true">schedule</span>0 ms Upload</span>
+              <span class="metric-label">Roda no navegador</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Estúdio Principal -->
+    <section id="editor" class="studio-section" aria-label="Mesa de edição de áudio">
+      <div class="container">
+        <!-- Linha 1: Visualizador de Forma de Onda + Analisador FFT -->
+        <div class="grid-12 monitor-row">
+          <!-- Waveform e Transporte (8 colunas) -->
+          <div class="panel waveform-panel col-span-8">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="material-icons" aria-hidden="true">graphic_eq</span>
+                <h2>Forma de Onda &amp; Linha do Tempo</h2>
+              </div>
+              <div class="time-readout" aria-live="off">
+                <span id="current-time">00:00.0</span>
+                <span class="time-sep">/</span>
+                <span id="total-time">00:00.0</span>
+              </div>
+            </div>
+
+            <input type="file" id="audio-file-input" class="sr-only" accept="audio/*,.mp3,.wav,.ogg,.m4a,.flac,.webm">
+
+            <div class="waveform-stage" id="waveform-stage" role="region" aria-label="Área de envio e forma de onda do áudio">
+              <canvas id="waveform-canvas" width="900" height="210"
+                aria-label="Visualização da forma de onda do áudio"></canvas>
+              <div id="waveform-empty" class="waveform-empty">
+                <div class="waveform-upload-icon" aria-hidden="true">
+                  <span class="material-icons">cloud_upload</span>
+                </div>
+                <strong class="waveform-empty-title">Arraste seu áudio aqui</strong>
+                <p class="waveform-empty-subtitle">MP3, WAV, OGG, M4A ou FLAC · até 100 MB</p>
+                <div class="waveform-empty-actions">
+                  <button type="button" id="btn-waveform-upload" class="btn btn-primary btn-cta">
+                    <span class="material-icons" aria-hidden="true">folder_open</span>
+                    <span>Enviar áudio para editar</span>
+                  </button>
+                  <button type="button" id="btn-waveform-demo" class="btn btn-outline">
+                    <span class="material-icons" aria-hidden="true">audiotrack</span>
+                    <span>Testar com batida pronta</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Metadados do arquivo carregado -->
+            <div id="file-info-bar" class="file-info-bar" hidden>
+              <div class="file-info-main">
+                <span class="material-icons file-info-icon" aria-hidden="true">music_note</span>
+                <div class="file-info-text">
+                  <strong id="file-name">Nenhum arquivo</strong>
+                  <span id="file-meta">00:00 · 44.1 kHz · Estéreo</span>
+                </div>
+              </div>
+              <button type="button" id="btn-clear-audio" class="btn-icon" title="Remover áudio atual"
+                aria-label="Remover áudio atual">
+                <span class="material-icons" aria-hidden="true">delete_outline</span>
+              </button>
+            </div>
+
+            <!-- Barra de Transporte -->
+            <div class="transport-bar">
+              <div class="transport-group">
+                <button type="button" id="btn-play" class="btn btn-primary" disabled aria-label="Reproduzir ou pausar">
+                  <span class="material-icons" id="icon-play" aria-hidden="true">play_arrow</span>
+                  <span id="label-play">Reproduzir</span>
+                </button>
+                <button type="button" id="btn-stop" class="btn btn-outline" disabled
+                  title="Parar e voltar ao início (R)">
+                  <span class="material-icons" aria-hidden="true">stop</span>
+                  <span class="hide-xs">Parar</span>
+                </button>
+                <button type="button" id="btn-loop" class="btn btn-outline" disabled aria-pressed="false"
+                  title="Repetir em loop (L)">
+                  <span class="material-icons" aria-hidden="true">loop</span>
+                  <span class="hide-sm">Loop</span>
+                </button>
+                <button type="button" id="btn-bypass" class="btn btn-outline" disabled aria-pressed="false"
+                  title="Ouvir áudio original sem efeitos (B)">
+                  <span class="material-icons" aria-hidden="true">compare</span>
+                  <span class="hide-sm">Original</span>
+                </button>
+              </div>
+
+              <div class="transport-group">
+                <button type="button" id="btn-reset" class="btn btn-ghost" disabled title="Resetar todos os controles">
+                  <span class="material-icons" aria-hidden="true">restart_alt</span>
+                  <span>Resetar</span>
+                </button>
+                <div class="export-combo">
+                  <select id="ctrl-export-format" class="select-input export-format-select" aria-label="Formato de exportação" disabled>
+                    <option value="mp3">MP3</option>
+                    <option value="wav">WAV</option>
+                  </select>
+                  <button type="button" id="btn-export" class="btn btn-primary" disabled>
+                    <span class="material-icons" id="icon-export" aria-hidden="true">download</span>
+                    <span id="label-export">Baixar MP3</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Analisador de Espectro + VU + Master Volume (4 colunas) -->
+          <div class="panel meter-panel col-span-4">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="material-icons" aria-hidden="true">equalizer</span>
+                <h2>Espectro &amp; Saída</h2>
+              </div>
+              <span id="clip-badge" class="status-badge status-clean">LIMPO</span>
+            </div>
+
+            <div class="spectrum-stage">
+              <canvas id="spectrum-canvas" width="420" height="120"
+                aria-label="Analisador de espectro de frequências em tempo real"></canvas>
+            </div>
+
+            <!-- Medidor VU -->
+            <div class="vu-block">
+              <div class="vu-labels">
+                <span>NÍVEL DE SAÍDA</span>
+                <span id="peak-db">-∞ dBFS</span>
+              </div>
+              <progress id="vu-progress" class="vu-progress" max="100" value="0"
+                aria-label="Nível de saída em decibéis"></progress>
+            </div>
+
+            <!-- Controle de Volume Master (Proteção Auditiva) -->
+            <div class="control-item compact-control">
+              <div class="control-top">
+                <label for="ctrl-master">
+                  <span class="material-icons" aria-hidden="true">volume_up</span>
+                  Volume Master (Monitor)
+                </label>
+                <output id="val-master" for="ctrl-master">50%</output>
+              </div>
+              <input type="range" id="ctrl-master" min="0" max="100" step="1" value="50">
+              <p id="hearing-warning" class="hearing-warning">
+                <span class="material-icons" aria-hidden="true">warning_amber</span>
+                <span id="hearing-warning-text">Mantenha o Volume Master baixo ao aumentar o ganho para proteger seus ouvidos.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Linha 2: Presets Rápidos -->
+        <div id="presets" class="panel presets-panel">
+          <div class="presets-header">
+            <div class="panel-title-group">
+              <span class="material-icons" aria-hidden="true">bolt</span>
+              <h2>Presets Instantâneos</h2>
+            </div>
+            <span class="presets-hint">Clique para aplicar uma configuração pronta</span>
+          </div>
+
+          <div class="presets-grid" role="group" aria-label="Presets de efeitos de áudio">
+            <button type="button" class="preset-btn active" data-preset="clean">
+              <strong>Original</strong>
+              <span>0 dB · Sem efeitos</span>
+            </button>
+            <button type="button" class="preset-btn" data-preset="estourado">
+              <strong>Áudio Estourado</strong>
+              <span>+120 dB · Hard Clip</span>
+            </button>
+            <button type="button" class="preset-btn" data-preset="max200">
+              <strong>Estouro Máximo</strong>
+              <span>+200 dB · Saturação Total</span>
+            </button>
+            <button type="button" class="preset-btn" data-preset="bassboost">
+              <strong>Bass Boosted</strong>
+              <span>+28 dB Graves · +24 dB Ganho</span>
+            </button>
+            <button type="button" class="preset-btn" data-preset="slowed">
+              <strong>Slowed + Reverb</strong>
+              <span>0.82x · Reverb 58%</span>
+            </button>
+            <button type="button" class="preset-btn" data-preset="muffled">
+              <strong>Festa no Banheiro</strong>
+              <span>Low-Pass 400 Hz · Reverb 100%</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Linha 3: Rack de Efeitos (Grid 12 colunas = 3 módulos de 4 colunas) -->
+        <div class="grid-12 rack-row">
+          <!-- Módulo 1: Ganho Extremo (+200 dB) e Saturação -->
+          <article class="panel rack-module col-span-4">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="material-icons" aria-hidden="true">bolt</span>
+                <h3>Ganho Extremo &amp; Estouro</h3>
+              </div>
+              <span id="gain-zone-tag" class="module-tag">0 dB</span>
+            </div>
+
+            <div class="control-stack">
+              <div class="control-item">
+                <div class="control-top">
+                  <label for="ctrl-gain">Ganho / Estouro</label>
+                  <output id="val-gain" for="ctrl-gain">0 dB</output>
+                </div>
+                <input type="range" id="ctrl-gain" min="-24" max="200" step="1" value="0">
+                <div class="range-scale">
+                  <span>-24 dB</span>
+                  <span>0 dB</span>
+                  <span>+100 dB</span>
+                  <span>+200 dB</span>
+                </div>
+              </div>
+
+              <div class="control-item">
+                <div class="control-top">
+                  <label for="ctrl-clip-mode">Curva de Saturação</label>
+                </div>
+                <select id="ctrl-clip-mode" class="select-input">
+                  <option value="hard">Hard Clip (Estouro Clássico)</option>
+                  <option value="fuzz">Fuzz Digital (Onda Quadrada)</option>
+                  <option value="soft">Soft Overdrive (Analógico)</option>
+                </select>
+              </div>
+
+              <div class="control-item">
+                <div class="control-top">
+                  <label for="ctrl-drive">Intensidade da Distorção</label>
+                  <output id="val-drive" for="ctrl-drive">0%</output>
+                </div>
+                <input type="range" id="ctrl-drive" min="0" max="100" step="1" value="0">
+              </div>
+            </div>
+          </article>
+
+          <!-- Módulo 2: Equalizador & Graves -->
+          <article class="panel rack-module col-span-4">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="material-icons" aria-hidden="true">tune</span>
+                <h3>Graves &amp; Equalizador</h3>
+              </div>
+              <span class="module-tag">3 BANDAS + LPF</span>
+            </div>
+
+            <div class="control-stack">
+              <div class="control-item">
+                <div class="control-top">
+                  <label for="ctrl-bass">Graves (Bass 90 Hz)</label>
+                  <output id="val-bass" for="ctrl-bass">0 dB</output>
+                </div>
+                <input type="range" id="ctrl-bass" min="-12" max="36" step="1" value="0">
+              </div>
+
+              <div class="control-item">
+                <div class="control-top">
+                  <label for="ctrl-mid">Médios (Mid 1 kHz)</label>
+                  <output id="val-mid" for="ctrl-mid">0 dB</output>
+                </div>
+                <input type="range" id="ctrl-mid" min="-12" max="24" step="1" value="0">
+              </div>
+
+              <div class="control-item">
+                <div class="control-top">
+                  <label for="ctrl-treble">Agudos (Treble 6 kHz)</label>
+                  <output id="val-treble" for="ctrl-treble">0 dB</output>
+                </div>
+                <input type="range" id="ctrl-treble" min="-12" max="24" step="1" value="0">
+              </div>
+
+              <div class="control-item">
+                <div class="control-top">
+                  <label for="ctrl-lowpass">Filtro Abafado (Low-Pass)</label>
+                  <output id="val-lowpass" for="ctrl-lowpass">20.0 kHz</output>
+                </div>
+                <input type="range" id="ctrl-lowpass" min="400" max="20000" step="50" value="20000">
+              </div>
+            </div>
+          </article>
+
+          <!-- Módulo 3: Reverb, Eco & Velocidade -->
+          <article class="panel rack-module col-span-4">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="material-icons" aria-hidden="true">waves</span>
+                <h3>Reverb, Eco &amp; Velocidade</h3>
+              </div>
+              <span class="module-tag">ESPACIAL</span>
+            </div>
+
+            <div class="control-stack">
+              <div class="control-item">
+                <div class="control-top">
+                  <label for="ctrl-reverb-mix">Reverb (Quantidade)</label>
+                  <output id="val-reverb-mix" for="ctrl-reverb-mix">0%</output>
+                </div>
+                <input type="range" id="ctrl-reverb-mix" min="0" max="100" step="1" value="0">
+              </div>
+
+              <div class="control-item">
+                <div class="control-top">
+                  <label for="ctrl-reverb-decay">Tamanho da Sala (Decay)</label>
+                  <output id="val-reverb-decay" for="ctrl-reverb-decay">2.2 s</output>
+                </div>
+                <input type="range" id="ctrl-reverb-decay" min="0.5" max="6.0" step="0.1" value="2.2">
+              </div>
+
+              <div class="control-item">
+                <div class="control-top">
+                  <label for="ctrl-delay-mix">Eco / Delay</label>
+                  <output id="val-delay-mix" for="ctrl-delay-mix">0%</output>
+                </div>
+                <input type="range" id="ctrl-delay-mix" min="0" max="80" step="1" value="0">
+              </div>
+
+              <div class="control-item">
+                <div class="control-top">
+                  <label for="ctrl-speed">Velocidade / Pitch</label>
+                  <output id="val-speed" for="ctrl-speed">1.00x</output>
+                </div>
+                <input type="range" id="ctrl-speed" min="0.5" max="2.0" step="0.02" value="1.0">
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção Documentação e Guia DSP (Grid 12 colunas) -->
+    <section id="guia" class="docs-section" aria-label="Documentação técnica e guia de uso">
+      <div class="container">
+        <div class="section-heading">
+          <div class="eyebrow">
+            <span class="material-icons" aria-hidden="true">menu_book</span>
+            <span>DOCUMENTAÇÃO &amp; GUIA DSP</span>
+          </div>
+          <h2>Como funciona o motor de áudio</h2>
+        </div>
+
+        <div class="grid-12 docs-grid">
+          <!-- Cadeia de Sinal (4 colunas) -->
+          <div class="panel docs-card col-span-4">
+            <h3>Cadeia de Sinal (Signal Chain)</h3>
+            <p class="docs-lead">
+              Tanto a reprodução em tempo real quanto o download em WAV passam exatamente pela mesma ordem de nós da Web
+              Audio API:
+            </p>
+            <ol class="signal-chain">
+              <li><span>01</span><strong>Buffer + Velocidade</strong> (0.5x – 2.0x)</li>
+              <li><span>02</span><strong>Equalizador 3 Bandas</strong> (Graves, Médios, Agudos)</li>
+              <li><span>03</span><strong>Filtro Low-Pass</strong> (400 Hz – 20 kHz)</li>
+              <li><span>04</span><strong>Ganho (-24 a +200 dB) + Clipper</strong></li>
+              <li><span>05</span><strong>Reverb Convolucional + Eco/Delay</strong></li>
+              <li><span>06</span><strong>Volume Master &amp; Saída WAV 16-bit</strong></li>
+            </ol>
+          </div>
+
+          <!-- Tabela de Referência (8 colunas) -->
+          <div class="panel docs-card col-span-8">
+            <h3>Guia Rápido de Efeitos &amp; Atalhos</h3>
+            <div class="table-wrap">
+              <table class="docs-table">
+                <thead>
+                  <tr>
+                    <th>Controle</th>
+                    <th>Faixa</th>
+                    <th>O que faz na prática</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Ganho / Estouro</strong></td>
+                    <td><code>-24 dB</code> a <code>+200 dB</code></td>
+                    <td>Amplifica o sinal até saturar em onda quadrada (clipping), criando o efeito clássico de áudio
+                      estourado. Use o Volume Master para ouvir com segurança.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Graves (Bass)</strong></td>
+                    <td><code>-12 dB</code> a <code>+36 dB</code></td>
+                    <td>Filtro <em>low-shelf</em> em 90 Hz que destaca subgraves e batidas pesadas antes da saturação.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>Reverb</strong></td>
+                    <td><code>0%</code> a <code>100%</code></td>
+                    <td>Convolução estéreo com resposta ao impulso sintética ajustável de 0.5 s (quarto) a 6.0 s
+                      (catedral).</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Velocidade</strong></td>
+                    <td><code>0.50x</code> a <code>2.00x</code></td>
+                    <td>Altera velocidade e tom juntos, ideal para criar versões <em>Slowed + Reverb</em> ou
+                      aceleradas.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="shortcuts-bar" aria-label="Atalhos de teclado">
+              <div class="shortcut-chip"><kbd>Espaço</kbd><span>Play / Pause</span></div>
+              <div class="shortcut-chip"><kbd>R</kbd><span>Parar e voltar ao início</span></div>
+              <div class="shortcut-chip"><kbd>B</kbd><span>Comparar Original (Bypass)</span></div>
+              <div class="shortcut-chip"><kbd>L</kbd><span>Ativar / Desativar Loop</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container grid-12 footer-inner">
+      <div class="col-span-6 footer-brand">
+        <strong>Fennecord · INS Studio</strong>
+        <span>Editor de áudio online construído com Web Audio API. Nenhum arquivo sai do seu dispositivo.</span>
+      </div>
+      <div class="col-span-6 footer-meta">
+        <span>Exportação: MP3 192 kbps &amp; WAV 16-bit</span>
+        <span>·</span>
+        <button type="button" id="btn-open-privacy" class="footer-link-btn">Privacidade &amp; LGPD</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal de Transparência e Privacidade (LGPD Art. 9º) -->
+  <dialog id="privacy-dialog" class="privacy-dialog" aria-labelledby="privacy-dialog-title">
+    <div class="dialog-header">
+      <div class="panel-title-group">
+        <span class="material-icons" aria-hidden="true">verified_user</span>
+        <h2 id="privacy-dialog-title">Privacidade &amp; Conformidade LGPD</h2>
+      </div>
+      <button type="button" id="btn-close-privacy" class="btn-icon" aria-label="Fechar aviso de privacidade">
+        <span class="material-icons" aria-hidden="true">close</span>
+      </button>
+    </div>
+    <div class="dialog-body">
+      <p>
+        O <strong>Fennecord</strong> foi desenvolvido sob o princípio de minimização de dados
+        (Lei nº 13.709/2018, LGPD, Art. 6º, III):
+      </p>
+      <ul>
+        <li><strong>Processamento 100% local:</strong> seus arquivos de áudio são decodificados, editados e exportados
+          exclusivamente na memória RAM do seu navegador via Web Audio API. Nenhum arquivo é enviado a servidores
+          externos.</li>
+        <li><strong>Zero coleta e zero rastreamento:</strong> não exigimos cadastro, não armazenamos dados pessoais e
+          não utilizamos cookies de análise ou publicidade.</li>
+        <li><strong>Fontes e ícones:</strong> carregamos apenas as fontes e os ícones visuais do Google Fonts de forma
+          segura, sem enviar informações da sua navegação e sem qualquer rastreamento.</li>
+        <li><strong>Direitos do titular (Art. 18 LGPD):</strong> como nenhum dado pessoal é persistido pelo editor, ao
+          fechar ou atualizar a página todos os áudios temporários são descartados automaticamente da memória.</li>
+      </ul>
+    </div>
+  </dialog>
+
+  <!-- Região de avisos/toasts -->
+  <div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+
+  <script type="module" src="./js/script.js"></script>
+</body>
+
+</html>

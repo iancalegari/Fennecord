@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="Fennecord INS Studio">
+  <title>Fennecord — INS Studio</title>
+  <!-- Silhueta principal da Raposa Feneco -->
+  <path fill="#FF4D00" d="
+    M128 112
+    C112 112 96 86 76 52
+    C58 22 36 18 24 28
+    C14 38 18 82 40 122
+    C52 144 64 158 64 166
+    C64 188 94 218 128 226
+    C162 218 192 188 192 166
+    C192 158 204 144 216 122
+    C238 82 242 38 232 28
+    C220 18 198 22 180 52
+    C160 86 144 112 128 112
+    Z
+  "/>
+  <!-- Interior amplo das orelhas em off-white -->
+  <path fill="#F3F1EA" d="M84 116 C64 102 42 72 38 46 C38 38 46 38 58 54 C74 76 88 98 96 114 C92 116 88 117 84 116 Z"/>
+  <path fill="#F3F1EA" d="M172 116 C192 102 214 72 218 46 C218 38 210 38 198 54 C182 76 168 98 160 114 C164 116 168 117 172 116 Z"/>
+  <!-- Bochechas brancas integradas até o focinho -->
+  <path fill="#F3F1EA" d="M64 166 C86 164 108 176 128 226 C94 218 64 188 64 166 Z"/>
+  <path fill="#F3F1EA" d="M192 166 C170 164 148 176 128 226 C162 218 192 188 192 166 Z"/>
+  <!-- Olhos expressivos -->
+  <circle cx="99" cy="156" r="10.5" fill="#141519"/>
+  <circle cx="157" cy="156" r="10.5" fill="#141519"/>
+  <circle cx="102" cy="152.5" r="3" fill="#F3F1EA"/>
+  <circle cx="160" cy="152.5" r="3" fill="#F3F1EA"/>
+  <!-- Narizinho delicado -->
+  <path fill="#141519" d="M117 190 C117 184 139 184 139 190 C139 197 132 203 128 203 C124 203 117 197 117 190 Z"/>
+</svg>
